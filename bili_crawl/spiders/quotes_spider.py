@@ -1,21 +1,13 @@
-<<<<<<< HEAD
-"""
-根据Scrapy的教程测试
-"""
-=======
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """ a python module """
 
 __author__ = 'Jack Zhang'
-
->>>>>>> ff71efa58df73330fc3dcebeb7153b65f65a269d
 import scrapy
 
 
 class QuotesSpider(scrapy.Spider):
-<<<<<<< HEAD
     name = 'quotes'
     start_urls = [
         "http://quotes.toscrape.com/page/1/",
@@ -42,7 +34,6 @@ class QuotesSpider(scrapy.Spider):
         # 继续缩短代码
         for a in response.css('ul.pager a'):
             yield response.follow(a, callback=self.parse)
-=======
     # name identifies the Spider
     name = 'quotes'
 
@@ -78,4 +69,3 @@ class QuotesSpider(scrapy.Spider):
         if next_page is not None:
             next_page = response.urljoin(next_page)
             yield scrapy.Request(next_page, callback=self.parse)
->>>>>>> ff71efa58df73330fc3dcebeb7153b65f65a269d
