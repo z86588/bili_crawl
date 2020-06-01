@@ -9,11 +9,6 @@ import scrapy
 
 
 class BiliCrawlItem(scrapy.Item):
-<<<<<<< HEAD
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
-=======
     """Default"""
     # define the fields for your item here like:
     # name = scrapy.Field()
@@ -100,4 +95,3 @@ class PgcItem(scrapy.Item):
     # 抓取分类信息
     pgc_type_s = scrapy.Field()  # 影视分类 season_type
     pgc_type_d = scrapy.Field()  # 统计时间 day
->>>>>>> ff71efa58df73330fc3dcebeb7153b65f65a269d
