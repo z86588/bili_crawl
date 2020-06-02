@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-""" a python module """
-
-__author__ = 'Jack Zhang'
+import scrapy
 
 
+class BiliPgcSpiderSpider(scrapy.Spider):
+    name = 'bili_pgc_spider'
+    allowed_domains = ['api.bilibili.com']
+    start_urls = ['http://api.bilibili.com/']
+
+    def parse(self, response):
+        pass
