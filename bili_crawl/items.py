@@ -76,7 +76,7 @@ class PgcItem(scrapy.Item):
     {name: "电视剧", season_type: 5}
     day:
     {name: "三日排行", value: 3},
-    {=name: "周排行",= value: 7}
+    {name: "周排行", value: 7}
     """
     # 通过https://api.bilibili.com/pgc/web/rank/list?day={day}&season_type={season_type}}获取
     # json['result']['list']
