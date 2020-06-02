@@ -88,6 +88,13 @@ class ContentList(object):
         {'name': "周排行", 'value': 7},
     ]
 
+    # UGC
+    _ugc_type = [
+        {'name': "全站榜", 'value': 'all', 'type': 1},
+        {'name': "原创榜", 'value': 'origin', 'type': 2},
+        {'name': "新人榜", 'value': 'rookie', 'type': 3},
+    ]
+
     _ugc_list = [
         {'name': "全站", 'rid': 0},
         {'name': "动画", 'rid': 1},
@@ -104,6 +111,11 @@ class ContentList(object):
         {'name': "影视", 'rid': 181},
     ]
 
+    _ugc_rank = [
+        {'name': "全部投稿", 'value': 0},
+        {'name': "近期投稿", 'value': 1},  # rookie没有
+    ]
+
     _ugc_day = [
         {'name': "日排行", 'value': 1},
         {'name': "三日排行", 'value': 3},
@@ -111,22 +123,30 @@ class ContentList(object):
         {'name': "月排行", 'value': 30},
     ]
 
-    _ugc_type = [
-        {'name': "全站榜", 'value': 'all', 'type': 1},
-        {'name': "原创榜", 'value': 'origin', 'type': 2},
-        {'name': "新人榜", 'value': 'rookie', 'type': 3},
-    ]
-
-    _ugc_rank = [
-        {'name': "全部投稿", 'value': 0},
-        {'name': "近期投稿", 'value': 1},  # rookie没有
-    ]
-
     _api_domain = 'https://api.bilibili.com'
 
-    # _pgc_uri = f'/pgc/web/rank/list?day={day}&season_type={season_type}'
-    # _ugc_uri = f'/x/web-interface/ranking?rid={rid}}&day={day}&type={type}&arc_type={rank_type}&jsonp=jsonp'
+    _pgc_uri = '/pgc/web/rank/list?day={day}&season_type={season_type}'
+    _ugc_uri = '/x/web-interface/ranking?rid={rid}&day={day}&type={type}&arc_type={rank}&jsonp=jsonp'
+
+    _ugc_url = []
+    for ut in _ugc_type:
+        for ul in _ugc_list:
+            if ut.get('type') == 3 and ul.get('rid') == 168:
+                continue
+            else:
+                for ur in _ugc_rank:
+                    if ut.get('type') == 3 and ur.get('value') == 1:
+                        continue
+                    else:
+                        for ud in _ugc_day:
+                            _ugc_uri.format(rid=ul.get('rid'), day=ud.get('value'), type=ut.get('type'), rank=ur.get('value'))
+                            _ugc_url.append(_ugc_uri)
+
+    @property
+    def ugc_url(self):
+        return self._ugc_url
 
 
 if __name__ == '__main__':
-    pass
+    a = ContentList()
+    print(a.ugc_url)
