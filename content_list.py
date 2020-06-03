@@ -12,6 +12,7 @@ describe:页面内容list
 
 
 class ContentList(object):
+    # www使用list
     _rankMenu = [
         {'name': "全站榜", 'type': "all"},
         {'name': "原创榜", 'type': "origin"},
@@ -125,10 +126,10 @@ class ContentList(object):
 
     _api_domain = 'https://api.bilibili.com'
 
-    _pgc_uri = '/pgc/web/rank/list?day={day}&season_type={season_type}'
-    _ugc_uri = '/x/web-interface/ranking?rid={rid}&day={day}&type={type}&arc_type={rank}&jsonp=jsonp'
+    # _pgc_uri = '/pgc/web/rank/list?day={day}&season_type={season_type}'
+    # _ugc_uri = '/x/web-interface/ranking?rid={rid}&day={day}&type={type}&arc_type={rank}&jsonp=jsonp'
 
-    _ugc_url = []
+    _ugc_uri = []
     for ut in _ugc_type:
         for ul in _ugc_list:
             if ut.get('type') == 3 and ul.get('rid') == 168:
@@ -139,14 +140,28 @@ class ContentList(object):
                         continue
                     else:
                         for ud in _ugc_day:
-                            _ugc_uri.format(rid=ul.get('rid'), day=ud.get('value'), type=ut.get('type'), rank=ur.get('value'))
-                            _ugc_url.append(_ugc_uri)
+                            _ugc_url = '/x/web-interface/ranking?rid={rid}&day={day}&type={type}&arc_type={' \
+                                       'rank}&jsonp=jsonp'.format(rid=ul.get('rid'), day=ud.get('value'),
+                                                                  type=ut.get('type'), rank=ur.get('value'))
+                            _ugc_uri.append(_api_domain + _ugc_url)
+
+    _pgc_uri = []
+    for pl in _pgc_list:
+        for pd in _pgc_day:
+            _pgc_url = '/pgc/web/rank/list?day={day}&season_type={st}'.format(
+                day=pd.get('value'), st=pl.get('season_type'))
+            _pgc_uri.append(_api_domain + _pgc_url)
 
     @property
-    def ugc_url(self):
-        return self._ugc_url
+    def ugc_uri(self):
+        return self._ugc_uri
+
+    @property
+    def pgc_uri(self):
+        return self._pgc_uri
 
 
 if __name__ == '__main__':
     a = ContentList()
-    print(a.ugc_url)
+    print('ugc数量：', len(a.ugc_uri), '\r\nugc内容：', a.ugc_uri)
+    print('pgc数量：', len(a.pgc_uri), '\r\npgc内容：', a.pgc_uri)
