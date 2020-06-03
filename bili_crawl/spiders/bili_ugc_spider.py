@@ -19,4 +19,5 @@ class BiliUgcSpiderSpider(scrapy.Spider):
         for c in c_list:
             item = UgcItem()
             item['ugc_aid'] = c.get('aid')
-            print(item['ugc_aid'])
+            item['ugc_title'] = c.get('title')
+            print(item['ugc_title'])
