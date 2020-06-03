@@ -17,4 +17,23 @@ CREATE TABLE `bili_ugc_rank` (
   `ugc_type_r` varchar(1) NOT NULL COMMENT '投稿时间分类',
   `ugc_crawl_time` date NOT NULL,
   PRIMARY KEY (`ugc_aid`,`ugc_type_r`,`ugc_type`,`ugc_day`,`ugc_area`,`ugc_crawl_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `bili_pgc_rank` (
+  `pgc_badge` varchar(5) DEFAULT NULL COMMENT '付费范围',
+  `pgc_copyright` varchar(15) DEFAULT NULL COMMENT '版权',
+  `pgc_cover` varchar(200) DEFAULT NULL COMMENT '封面URL',
+  `pgc_show` varchar(20) DEFAULT NULL COMMENT '信息',
+  `pgc_pts` int DEFAULT NULL COMMENT '综合评分',
+  `pgc_rank` tinyint DEFAULT NULL COMMENT '分类下排位',
+  `pgc_sid` varchar(10) NOT NULL COMMENT '系列ID',
+  `pgc_danmaku` int DEFAULT NULL COMMENT '弹幕数',
+  `pgc_follow` int DEFAULT NULL COMMENT '追剧人数',
+  `pgc_follow_s` int DEFAULT NULL COMMENT '系列追剧人数',
+  `pgc_view` int DEFAULT NULL COMMENT '播放量',
+  `pgc_title` varchar(100) DEFAULT NULL COMMENT '标题',
+  `pgc_type_s` varchar(1) NOT NULL COMMENT '影视分类 season_type',
+  `pgc_type_d` varchar(1) NOT NULL COMMENT '统计时间 day',
+  `pgc_crawl_time` date NOT NULL,
+  PRIMARY KEY (`pgc_sid`,`pgc_type_s`,`pgc_type_d`,`pgc_crawl_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
