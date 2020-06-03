@@ -1,0 +1,20 @@
+CREATE TABLE `bili_ugc_rank` (
+  `ugc_aid` int NOT NULL COMMENT '视频数字ID',
+  `ugc_bvid` varchar(25) NOT NULL COMMENT '视频字符串ID',
+  `ugc_author` varchar(20) NOT NULL COMMENT '视频作者',
+  `ugc_coins` int NOT NULL COMMENT '视频投币数',
+  `ugc_duration` varchar(10) NOT NULL COMMENT '视频总时长',
+  `ugc_mid` int NOT NULL COMMENT '视频作者ID',
+  `ugc_image` varchar(200) NOT NULL COMMENT '视频图片url',
+  `ugc_play` int NOT NULL COMMENT '视频播放数',
+  `ugc_pts` int NOT NULL COMMENT '视频综合得分',
+  `ugc_title` varchar(100) NOT NULL COMMENT '视频标题',
+  `ugc_review` int NOT NULL COMMENT '视频弹幕数',
+  `ugc_rank` tinyint NOT NULL COMMENT '视频排行',
+  `ugc_area` tinyint NOT NULL COMMENT '视频分类',
+  `ugc_day` tinyint NOT NULL COMMENT '统计时间范围分类',
+  `ugc_type` varchar(1) NOT NULL COMMENT '排行榜大类',
+  `ugc_type_r` varchar(1) NOT NULL COMMENT '投稿时间分类',
+  `ugc_crawl_time` date NOT NULL,
+  PRIMARY KEY (`ugc_aid`,`ugc_type_r`,`ugc_type`,`ugc_day`,`ugc_area`,`ugc_crawl_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
