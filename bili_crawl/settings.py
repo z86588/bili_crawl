@@ -87,3 +87,10 @@ COOKIES_ENABLED = False
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# Mysql DB Settings
+MYSQL_HOST = 'localhost'
+MYSQL_PORT = 3306
+MYSQL_DB = 'biliCrawl'
+MYSQL_USER = 'bili'
+MYSQL_PW = 'bili'

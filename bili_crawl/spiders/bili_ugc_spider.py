@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import json
+import time
 from bili_crawl.items import UgcItem
 from content_list import ContentList
+from urllib import parse
 
 
 class BiliUgcSpiderSpider(scrapy.Spider):
@@ -17,11 +19,30 @@ class BiliUgcSpiderSpider(scrapy.Spider):
     def parse(self, response):
         body = response.body.decode('utf8')
         c_list = json.loads(body)['data']['list']
-        print(response.url)
+        params = parse.parse_qs(parse.urlparse(response.url).query)
+        u_rid = params['rid'][0]
+        u_day = params['day'][0]
+        u_type = params['type'][0]
+        u_type_r = params['arc_type'][0]
+        u_date = time.strftime("%Y-%m-%d", time.localtime())
 
         for c in c_list:
-            # item = UgcItem()
-            # item['ugc_aid'] = c.get('aid')
-            # item['ugc_title'] = c.get('title')
-            # print(item['ugc_title'])
-            print(c.get('title'))
+            uItem = UgcItem()
+            uItem['ugc_bvid'] = c['bvid']
+            uItem['ugc_author'] = c['author']
+            uItem['ugc_coins'] = c['coins']
+            uItem['ugc_duration'] = c['duration']
+            uItem['ugc_mid'] = c['mid']
+            uItem['ugc_image'] = c['pic']
+            uItem['ugc_play'] = c['play']
+            uItem['ugc_pts'] = c['pts']
+            uItem['ugc_title'] = c['title']
+            uItem['ugc_review'] = c['video_review']
+            uItem['ugc_rank'] = c_list.index(c)
+            uItem['ugc_area'] = u_rid
+            uItem['ugc_day'] = u_day
+            uItem['ugc_type'] = u_type
+            uItem['ugc_type_r'] = u_type_r
+            uItem['ugc_time'] = u_date
+
+            yield uItem
