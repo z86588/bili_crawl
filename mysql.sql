@@ -16,7 +16,9 @@ CREATE TABLE `bili_ugc_rank` (
   `ugc_type` varchar(1) NOT NULL COMMENT '排行榜大类',
   `ugc_type_r` varchar(1) NOT NULL COMMENT '投稿时间分类',
   `ugc_crawl_time` date NOT NULL,
-  PRIMARY KEY (`ugc_aid`,`ugc_type_r`,`ugc_type`,`ugc_day`,`ugc_area`,`ugc_crawl_time`)
+  `ugc_id` int NOT NULL AUTO_INCREMENT COMMENT '唯一值',
+  PRIMARY KEY (`ugc_id`),
+  UNIQUE KEY `UGC_UNIQUE` (`ugc_aid`,`ugc_rank`,`ugc_day`,`ugc_area`,`ugc_type`,`ugc_type_r`,`ugc_crawl_time`) /*!80000 INVISIBLE */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `bili_pgc_rank` (
@@ -35,5 +37,7 @@ CREATE TABLE `bili_pgc_rank` (
   `pgc_type_s` varchar(1) NOT NULL COMMENT '影视分类 season_type',
   `pgc_type_d` varchar(1) NOT NULL COMMENT '统计时间 day',
   `pgc_crawl_time` date NOT NULL,
-  PRIMARY KEY (`pgc_sid`,`pgc_type_s`,`pgc_type_d`,`pgc_crawl_time`)
+  `pgc_id` int NOT NULL AUTO_INCREMENT COMMENT '唯一值',
+  PRIMARY KEY (`pgc_id`),
+  UNIQUE KEY `PGC_UNIQUE` (`pgc_crawl_time`,`pgc_type_d`,`pgc_type_s`,`pgc_sid`) /*!80000 INVISIBLE */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
