@@ -11,7 +11,7 @@ CREATE TABLE `bili_ugc_rank` (
   `ugc_title` varchar(100) NOT NULL COMMENT '视频标题',
   `ugc_review` int NOT NULL COMMENT '视频弹幕数',
   `ugc_rank` tinyint NOT NULL COMMENT '视频排行',
-  `ugc_area` tinyint NOT NULL COMMENT '视频分类',
+  `ugc_area` int NOT NULL COMMENT '视频分类',
   `ugc_day` tinyint NOT NULL COMMENT '统计时间范围分类',
   `ugc_type` varchar(1) NOT NULL COMMENT '排行榜大类',
   `ugc_type_r` varchar(1) NOT NULL COMMENT '投稿时间分类',
@@ -19,7 +19,7 @@ CREATE TABLE `bili_ugc_rank` (
   `ugc_id` int NOT NULL AUTO_INCREMENT COMMENT '唯一值',
   PRIMARY KEY (`ugc_id`),
   UNIQUE KEY `UGC_UNIQUE` (`ugc_aid`,`ugc_rank`,`ugc_day`,`ugc_area`,`ugc_type`,`ugc_type_r`,`ugc_crawl_time`) /*!80000 INVISIBLE */
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 CREATE TABLE `bili_pgc_rank` (
   `pgc_badge` varchar(5) DEFAULT NULL COMMENT '付费范围',
