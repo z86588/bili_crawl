@@ -46,8 +46,8 @@ class BiliUgcPipeline:
              item['ugc_review'], item['ugc_rank'], item['ugc_area'], item['ugc_day'], item['ugc_type'],
              item['ugc_type_r'], item['ugc_crawl_time']))
         if len(self.item_list) == 500:
-            print(self.item_list)
-            query = self.dbpool.runInteraction(self.do_bulk_insert, self.item_list)
+            bulk_item = self.item_list[:]
+            query = self.dbpool.runInteraction(self.do_bulk_insert, bulk_item)
             query.addErrback(self.handle_error)
             self.item_list.clear()
         return item
@@ -70,7 +70,7 @@ class BiliUgcPipeline:
     #         item['ugc_type_r'], item['ugc_crawl_time']))
 
     def do_bulk_insert(self, cursor, item_list):
-        print('>>>>enter bulk insert!')
+        # print('>>>>enter bulk insert!')
         insertSql = """
         insert into bili_ugc_rank (ugc_aid, ugc_bvid, ugc_author, ugc_coins, ugc_duration, ugc_mid, ugc_image, 
         ugc_play, ugc_pts, ugc_title, ugc_review, ugc_rank, ugc_area, ugc_day, ugc_type, ugc_type_r, ugc_crawl_time) 
@@ -83,4 +83,5 @@ class BiliUgcPipeline:
 
     def close_spider(self, spider):
         print("closing spider,last commit", len(self.item_list))
-        self.do_bulk_insert(self.item_list)
+        query = self.dbpool.runInteraction(self.do_bulk_insert, self.item_list)
+        query.addErrback(self.handle_error)

@@ -27,23 +27,23 @@ class BiliUgcSpiderSpider(scrapy.Spider):
         u_date = time.strftime("%Y-%m-%d", time.localtime())
 
         for c in c_list:
-            item = UgcItem()
-            item['ugc_aid'] = c['aid']
-            item['ugc_bvid'] = c['bvid']
-            item['ugc_author'] = c['author']
-            item['ugc_coins'] = c['coins']
-            item['ugc_duration'] = c['duration']
-            item['ugc_mid'] = c['mid']
-            item['ugc_image'] = c['pic']
-            item['ugc_play'] = c['play']
-            item['ugc_pts'] = c['pts']
-            item['ugc_title'] = c['title']
-            item['ugc_review'] = c['video_review']
-            item['ugc_rank'] = c_list.index(c)
-            item['ugc_area'] = u_rid
-            item['ugc_day'] = u_day
-            item['ugc_type'] = u_type
-            item['ugc_type_r'] = u_type_r
-            item['ugc_crawl_time'] = u_date
+            uItem = UgcItem()
+            uItem['ugc_aid'] = c['aid']
+            uItem['ugc_bvid'] = c['bvid']
+            uItem['ugc_author'] = c['author']
+            uItem['ugc_coins'] = c['coins']
+            uItem['ugc_duration'] = c['duration']
+            uItem['ugc_mid'] = c['mid']
+            uItem['ugc_image'] = c['pic']
+            uItem['ugc_play'] = c['play']
+            uItem['ugc_pts'] = c['pts']
+            uItem['ugc_title'] = c['title']
+            uItem['ugc_review'] = c['video_review']
+            uItem['ugc_rank'] = (c_list.index(c) + 1)
+            uItem['ugc_area'] = u_rid
+            uItem['ugc_day'] = u_day
+            uItem['ugc_type'] = u_type
+            uItem['ugc_type_r'] = u_type_r
+            uItem['ugc_crawl_time'] = u_date
 
-            yield item
+            yield uItem
