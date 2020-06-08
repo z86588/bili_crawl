@@ -64,7 +64,7 @@ class UgcItem(scrapy.Item):
     ugc_day = scrapy.Field()  # 统计时间
     ugc_type = scrapy.Field()  # 排行榜大类
     ugc_type_r = scrapy.Field()  # 投稿时间分类
-    ugc_time = scrapy.Field()  # 爬取时间 日期Y-m-d
+    ugc_crawl_time = scrapy.Field()  # 爬取时间 日期Y-m-d
 
 
 class PgcItem(scrapy.Item):
@@ -96,4 +96,4 @@ class PgcItem(scrapy.Item):
     # 抓取分类信息
     pgc_type_s = scrapy.Field()  # 影视分类 season_type
     pgc_type_d = scrapy.Field()  # 统计时间 day
-    pgc_time = scrapy.Field()  # 爬取时间 Y-m-d
+    pgc_crawl_time = scrapy.Field()  # 爬取时间 Y-m-d

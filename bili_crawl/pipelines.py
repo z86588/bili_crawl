@@ -6,7 +6,7 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import pymysql
 from twisted.enterprise import adbapi
-from bili_crawl import settings
+# from bili_crawl import settings
 
 
 class BiliCrawlPipeline:
@@ -27,6 +27,8 @@ class BiliUgcPipeline:
             db=settings['MYSQL_DB'],
             user=settings['MYSQL_USER'],
             password=settings['MYSQL_PW'],
+            charset='UTF8mb4',
+            use_unicode=True,
             cursorclass=pymysql.cursors.DictCursor
         )
 
@@ -34,20 +36,29 @@ class BiliUgcPipeline:
 
         return cls(dbpool)
 
-    def process(self, item, spider):
+    def process_item(self, item, spider):
         query = self.dbpool.runInteraction(self.do_insert, item)
         query.addErrback(self.handle_error)
+        return item
 
     def do_insert(self, cursor, item):
-        insertSql = 'insert into bili_ugc_rank (ugc_bvid, ugc_author, ugc_coins, ugc_duration, ugc_mid, ugc_image, ugc_play, ugc_pts, ugc_title, ugc_review, ugc_rank, ugc_area, ugc_day, ugc_type, ugc_type_r, ugc_time) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
-        cursor.execute(insertSql, args=(
-            item['ugc_bvid'], item['ugc_author'], item['ugc_coins'], item['ugc_duration'], item['ugc_mid'],
-            item['ugc_image'], item['ugc_play'], item['ugc_pts'], item['ugc_title'], item['ugc_review'],
-            item['ugc_rank'],
-            item['ugc_area'], item['ugc_day'], item['ugc_type'], item['ugc_type_r'], item['ugc_time']))
+        insertSql = """
+        insert into bili_ugc_rank (ugc_aid, ugc_bvid, ugc_author, ugc_coins, ugc_duration, ugc_mid, ugc_image, 
+        ugc_play, ugc_pts, ugc_title, ugc_review, ugc_rank, ugc_area, ugc_day, ugc_type, ugc_type_r, ugc_crawl_time) 
+        values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(insertSql, (
+            item['ugc_aid'], item['ugc_bvid'], item['ugc_author'], item['ugc_coins'], item['ugc_duration'],
+            item['ugc_mid'], item['ugc_image'], item['ugc_play'], item['ugc_pts'], item['ugc_title'],
+            item['ugc_review'], item['ugc_rank'], item['ugc_area'], item['ugc_day'], item['ugc_type'],
+            item['ugc_type_r'], item['ugc_crawl_time']))
 
     def do_bulk_insert(self, item_list):
-        insertSql = 'insert into bili_ugc_rank (ugc_bvid, ugc_author, ugc_coins, ugc_duration, ugc_mid, ugc_image, ugc_play, ugc_pts, ugc_title, ugc_review, ugc_rank, ugc_area, ugc_day, ugc_type, ugc_type_r, ugc_time) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        insertSql = """
+        insert into bili_ugc_rank (ugc_aid, ugc_bvid, ugc_author, ugc_coins, ugc_duration, ugc_mid, ugc_image, 
+        ugc_play, ugc_pts, ugc_title, ugc_review, ugc_rank, ugc_area, ugc_day, ugc_type, ugc_type_r, ugc_crawl_time) 
+        values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
         pass
 
     def handle_error(self, exception):
