@@ -7,4 +7,4 @@ __author__ = 'Jack Zhang'
 
 from scrapy import cmdline
 
-cmdline.execute('scrapy crawl bili_ugc'.split())
+cmdline.execute('scrapy crawl bili_pgc'.split())

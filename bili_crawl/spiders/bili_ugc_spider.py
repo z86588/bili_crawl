@@ -15,6 +15,11 @@ class BiliUgcSpiderSpider(scrapy.Spider):
     allowed_domains = ['api.bilibili.com']
     # start_urls = ['https://api.bilibili.com/x/web-interface/ranking?rid=0&day=3&type=1&arc_type=0&jsonp=jsonp']
     start_urls = url_list[:]
+    custom_settings = {
+       'ITEM_PIPELINES': {
+            'bili_crawl.pipelines.BiliUgcPipeline': 200
+        }
+    }
 
     def parse(self, response):
         body = response.body.decode('utf8')

@@ -65,6 +65,7 @@ COOKIES_ENABLED = False
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'bili_crawl.pipelines.BiliUgcPipeline': 200,
+   'bili_crawl.pipelines.BiliPgcPipeline': 210,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
